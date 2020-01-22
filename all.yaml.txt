@@ -1,0 +1,8 @@
+- hosts: zookeeper
+  any_errors_fatal: true
+  tasks:
+  - import_role:
+       name: confluent.zookeeper
+     tags: 
+       - zookeeper
+ 

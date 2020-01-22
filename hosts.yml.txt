@@ -1,0 +1,9 @@
+all:
+ vars:
+  security_mode: sasl_ssl
+
+zookeeper:
+ hosts:
+  serverabc:
+  serverdef:
+  serverpqr:

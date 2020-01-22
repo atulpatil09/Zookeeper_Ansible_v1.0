@@ -1,0 +1,47 @@
+- name: Load default variables
+   include_vars: "config.yml"
+
+-name: zookeeper datadir creation
+ file:
+    path: "{{zookeeper.config.dataDir}}"
+    mode: 0755
+   state: directory
+   owner: "{{zookeeper.user}}"
+   group: "{{zookeeper.group}}"
+
+-name: zookeeper my-id file creation
+ template:
+   src: myid.j2
+   dest: "{{zookeeper.config.dataDir}}/myid"
+   mode: 0755
+   owner: "{{zookeeper.user}}"
+   group: "{{zookeeper.group}}"
+
+-name: zookeeper properties creation
+ template:
+   src: zookeeper.properties.j2
+   dest: "{{zookeeper.config_file}}"
+   mode: 0755
+   owner: "{{zookeeper.user}}"
+   group: "{{zookeeper.group}}"
+
+-name: zookeeper jaas config creation
+ template:
+   src: zookeeper_jaas.conf.j2
+   dest: "{{zookeeper.jaas_config_file}}"
+   mode: 0755
+   owner: "{{zookeeper.user}}"
+   group: "{{zookeeper.group}}"
+ when: security_mode ==  "ssl"  or security_mode ==  "sasl_ssl" 
+
+-name: zookeeper custom start
+ template:
+   src: zookeeper_server_start.j2
+   dest: "{{zookeeper.custom_start_file}}"
+   mode: 0755
+   owner: "{{zookeeper.user}}"
+   group: "{{zookeeper.group}}"
+  when: security_mode ==  "ssl"  or security_mode ==  "sasl_ssl" 
+
+-name: start zookeeper service
+ command: "sudo systemctl start "{{zookeeper.service_name}}"

@@ -1,0 +1,37 @@
+installation:
+  rpm_path: /repository
+  rpm_name: confluent_kafka_5.0.2.x86_64
+  install_path: /tmp/ansible/confluent
+  owner: admin
+  group: admin
+
+
+java_home: /usr/java/latest
+
+
+##SSl information##
+##configure ssl inputs
+
+
+##zookeeper properties
+
+log:
+ path: /var/log/confluent
+ owner: admin
+ group: admin
+
+zookeeper:
+ user: admin
+ group: admin
+ config_file: "{{installation.install_path}}/v5.0.1/etc/kafka/zookeeper.properties"
+  jaas_config_file: "{{installation.install_path}}/v5.0.1/etc/kafka/zookeeper_jaas.conf"
+  custom_start_file: "{{installation.install_path}}/v5.0.1/bin/custom/zookeeper-server-start"
+  service_name: confluent-zookeeper
+  config:
+  clientport: 2181
+   maxclientCnxns:0
+   ....properties...
+   ....properties...
+   ....properties...
+   dataDir: /var/lib/ansible/zookeeper
+   
